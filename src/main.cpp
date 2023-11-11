@@ -1,8 +1,13 @@
 #include <Arduino.h>
+#include "lcd_display_16_2.h"
+
+
+Display display;
 void setup() {
-// write your initialization code here
+    display.setup();
 }
 
+
 void loop() {
-// write your code here
+    display.contrast_button();
 }
