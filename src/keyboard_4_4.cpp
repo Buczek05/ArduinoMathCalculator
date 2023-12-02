@@ -19,6 +19,10 @@ char Keyboard_4_4::get_key() {
     return ' ';
 }
 
+int Keyboard_4_4::get_key_number() const{
+    return analogRead(PIN);
+}
+
 void Keyboard_4_4::change_mode() {
     current_mode = (current_mode + 1) % MODEL_LEN;
 }

@@ -16,6 +16,7 @@ char key;
 String text;
 void loop() {
     key = keyboard.get_key();
+//    display.show_text(String(keyboard.get_key_number()));
     if (key == keyboard.CLEAR_SCREEN) {
         text = "";
         display.show_text(text);
