@@ -1,20 +1,43 @@
 #include "keyboard_4_4.h"
 
 Keyboard_4_4::Keyboard_4_4() {
-    pinMode(pin, INPUT);
+    pinMode(PIN, INPUT);
 }
 
 char Keyboard_4_4::get_key() {
-    int key = analogRead(pin);
-    if (key == default_input || key == last_pressed) {
+    int key = analogRead(PIN);
+    if (key == DEFAULT_INPUT || key == last_pressed) {
         last_pressed = key;
         return ' ';
     }
     for (int i = 0; i < 16; i++) {
-        if (key_input[i] == key) {
+        if (KEY_INPUT[i] == key) {
             last_pressed = key;
-            return key_output[i];
+            return get_output(i);
         }
+    }
+    return ' ';
+}
+
+void Keyboard_4_4::change_mode() {
+    current_mode = (current_mode + 1) % MODEL_LEN;
+}
+
+char Keyboard_4_4::get_output(int key_number) {
+    char key_output = get_output_by_mode(key_number);
+    if (key_output == CHANGE_MODE) {
+        change_mode();
+        return key_output;
+    }
+    return key_output;
+}
+
+char Keyboard_4_4::get_output_by_mode(int key_number) {
+    if (current_mode == 0) {
+        return KEY_OUTPUT_A[key_number];
+    }
+    if (current_mode == 1) {
+        return KEY_OUTPUT_B[key_number];
     }
     return ' ';
 }

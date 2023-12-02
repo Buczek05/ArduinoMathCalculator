@@ -24,12 +24,22 @@ void LcdDisplay16_2::show_text(const String& text){
     if (text == print_text) {
         return;
     }
-    lcd.clear();
-    lcd.print(text);
     print_text = text;
+    show_text();
 }
 
 void LcdDisplay16_2::show_text() {
+    int text_len = (int)print_text.length(), text_start = text_len > COLUMN_LEN ? text_len - COLUMN_LEN : 0;
+    String text_to_print = print_text.substring(text_start, text_len);
     lcd.clear();
-    lcd.print(print_text);
+    lcd.setCursor(0, 0);
+    lcd.print(text_to_print);
+}
+
+void LcdDisplay16_2::show_result(const String& text) {
+    int text_len = (int)text.length();
+    show_text();
+    lcd.setCursor(COLUMN_LEN-text_len, ROW_LEN - 1);
+    lcd.print(text);
+
 }
